@@ -1,5 +1,5 @@
-function encode(text, key) {
-  let keyReduced = key.split("").reduce((acc, letter) => {
+const getKey = key =>
+  key.split("").reduce((acc, letter) => {
     if (acc.split("")[acc.length - 1] !== letter) {
       return (acc = acc + letter);
     } else {
@@ -7,15 +7,15 @@ function encode(text, key) {
     }
   });
 
+const getAlphabet = key => {
   var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-  keyReduced
-    .split("")
-    .map(letter => alphabet.splice(alphabet.indexOf(letter), 1));
-  alphabet = (keyReduced + alphabet.join("")).split("");
+  key.split("").map(letter => alphabet.splice(alphabet.indexOf(letter), 1));
+  return (key + alphabet.join("")).split("");
+};
 
+const getConvert = (key, alphabet, text) => {
   let i = 1;
-
-  let out = text
+  return text
     .split("")
     .map(letter => {
       let flagUpper = false;
@@ -33,15 +33,21 @@ function encode(text, key) {
       }
     })
     .join("");
+};
 
-  return out;
+function encode(text, key) {
+  let keyReduced = getKey(key);
+  let alphabet = getAlphabet(keyReduced);
+  return getConvert(keyReduced, alphabet, text);
 }
 
 function decode(text, key) {
-  return text;
+  let keyReduced = getKey(key);
+  let alphabet = getAlphabet(keyReduced);
+  return getConvert(keyReduced, alphabet, text);
 }
 
-console.log(encode("This is an example.", "cccciiiiippphheeeeerrrrr"));
+console.log(encode("This is an exemple.", "cccciiiiippphheeeeerrrrr"));
 // Urew pu bq rzfsbtj.
 
 // Urew pu bq rzfsbtj
