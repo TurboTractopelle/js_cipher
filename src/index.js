@@ -13,7 +13,7 @@ const getAlphabet = key => {
   return (key + alphabet.join("")).split("");
 };
 
-const getConvert = (key, alphabet, text) => {
+const getConvert = (key, alphabet, text, encode) => {
   let i = 1;
   return text
     .split("")
@@ -24,7 +24,24 @@ const getConvert = (key, alphabet, text) => {
         flagUpper = true;
       }
       if (alphabet.indexOf(letter) !== -1) {
-        let encodedLetter = alphabet[alphabet.indexOf(letter) + i];
+        let encodedLetter;
+        console.log(
+          alphabet.indexOf(letter) + (encode ? +i : -i),
+          alphabet.length
+        );
+        if (alphabet.indexOf(letter) + i > alphabet.length && encode) {
+          encodedLetter =
+            alphabet[
+              alphabet.indexOf(letter) - alphabet.length + (encode ? +i : -i)
+            ];
+        } else if (alphabet.indexOf(letter) - i < 0 && !encode) {
+          encodedLetter =
+            alphabet[alphabet.indexOf(letter) + alphabet.length - i];
+        } else {
+          encodedLetter =
+            alphabet[alphabet.indexOf(letter) + (encode ? +i : -i)];
+        }
+        //console.log(alphabet[alphabet.length-3])
         ++i;
         return flagUpper ? encodedLetter.toUpperCase() : encodedLetter;
       } else {
@@ -38,16 +55,18 @@ const getConvert = (key, alphabet, text) => {
 function encode(text, key) {
   let keyReduced = getKey(key);
   let alphabet = getAlphabet(keyReduced);
-  return getConvert(keyReduced, alphabet, text);
+  return getConvert(keyReduced, alphabet, text, true);
 }
 
 function decode(text, key) {
   let keyReduced = getKey(key);
   let alphabet = getAlphabet(keyReduced);
-  return getConvert(keyReduced, alphabet, text);
+  console.log(alphabet);
+  return getConvert(keyReduced, alphabet, text, false);
 }
 
-console.log(encode("This is an exemple.", "cccciiiiippphheeeeerrrrr"));
-// Urew pu bq rzfsbtj.
+console.log(encode(decode("This is an example.", "ecrtky"), "ecrtky"));
 
-// Urew pu bq rzfsbtj
+//console.log(decode("Kjmq jv bp cxcovpq.", "secretkey"));
+
+// Urew pu bq rzfsbtj.
