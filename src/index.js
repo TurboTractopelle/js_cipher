@@ -25,26 +25,27 @@ const getConvert = (key, alphabet, text, encode) => {
       }
       if (alphabet.indexOf(letter) !== -1) {
         let encodedLetter;
-        console.log(
-          alphabet.indexOf(letter) + (encode ? +i : -i),
-          alphabet.length,
-          i
-        );
-        if (alphabet.indexOf(letter) + i > alphabet.length && encode) {
+        console.log(alphabet.length, alphabet.indexOf(letter), i);
+        if (alphabet.indexOf(letter) + i + 1 > alphabet.length && encode) {
+          console.log(
+            "plus",
+            alphabet[i - (alphabet.length - alphabet.indexOf(letter))]
+          );
           encodedLetter =
             alphabet[i - (alphabet.length - alphabet.indexOf(letter))];
         } else if (alphabet.indexOf(letter) - i < 0 && !encode) {
           console.log(
-            alphabet[alphabet.indexOf(letter) + alphabet.length - i],
-            "m"
+            alphabet.length + alphabet.indexOf(letter) - i,
+            alphabet[alphabet.length + alphabet.indexOf(letter) - i],
+            "moins"
           );
           encodedLetter =
-            alphabet[alphabet.indexOf(letter) + alphabet.length - i];
+            alphabet[alphabet.length + alphabet.indexOf(letter) - i];
         } else {
           console.log(
             alphabet[alphabet.indexOf(letter) + (encode ? +i : -i)],
-            "def",
-            alphabet.indexOf(letter)
+            "defaut",
+            alphabet.indexOf(letter) + (encode ? +i : -i)
           );
           encodedLetter =
             alphabet[alphabet.indexOf(letter) + (encode ? +i : -i)];
@@ -74,7 +75,7 @@ function decode(text, key) {
   return getConvert(keyReduced, alphabet, text, false);
 }
 
-console.log(decode(encode("s", "secrtky"), "secrtky"));
+console.log(decode(encode("This is an example", "secrtky"), "secrtky"));
 
 //console.log(decode("Kjmq jv bp cxcovpq.", "secretkey"));
 
