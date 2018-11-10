@@ -1,19 +1,8 @@
-const getKey = key =>
-  key.split("").reduce((acc, letter) => {
-    if (acc.split("")[acc.length - 1] !== letter) {
-      return (acc = acc + letter);
-    } else {
-      return acc;
-    }
-  });
+const getConvert = (text, key, encode) => {
+  let alphabet = Array.from(
+    new Set((key + "abcdefghijklmnopqrstuvwxyz").split("").map(e => e))
+  ).map(e => e);
 
-const getAlphabet = key => {
-  var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-  key.split("").map(letter => alphabet.splice(alphabet.indexOf(letter), 1));
-  return (key + alphabet.join("")).split("");
-};
-
-const getConvert = (key, alphabet, text, encode) => {
   let i = 1;
   return text
     .split("")
@@ -25,34 +14,17 @@ const getConvert = (key, alphabet, text, encode) => {
       }
       if (alphabet.indexOf(letter) !== -1) {
         let encodedLetter;
-        console.log(alphabet.length, alphabet.indexOf(letter), i);
+        let index;
+
         if (alphabet.indexOf(letter) + i + 1 > alphabet.length && encode) {
-          console.log(
-            "plus",
-            alphabet[i - (alphabet.length - alphabet.indexOf(letter))]
-          );
-          encodedLetter =
-            alphabet[i - (alphabet.length - alphabet.indexOf(letter))];
+          index = i - (alphabet.length - alphabet.indexOf(letter));
         } else if (alphabet.indexOf(letter) - i < 0 && !encode) {
-          console.log(
-            alphabet.length + alphabet.indexOf(letter) - i,
-            alphabet[alphabet.length + alphabet.indexOf(letter) - i],
-            "moins"
-          );
-          encodedLetter =
-            alphabet[alphabet.length + alphabet.indexOf(letter) - i];
+          index = alphabet.length + alphabet.indexOf(letter) - i;
         } else {
-          console.log(
-            alphabet[alphabet.indexOf(letter) + (encode ? +i : -i)],
-            "defaut",
-            alphabet.indexOf(letter) + (encode ? +i : -i)
-          );
-          encodedLetter =
-            alphabet[alphabet.indexOf(letter) + (encode ? +i : -i)];
+          index = alphabet.indexOf(letter) + (encode ? +i : -i);
         }
-        //console.log(alphabet[alphabet.length-3])
         ++i;
-        return flagUpper ? encodedLetter.toUpperCase() : encodedLetter;
+        return flagUpper ? alphabet[index].toUpperCase() : alphabet[index];
       } else {
         i = 1;
         return letter;
@@ -62,21 +34,13 @@ const getConvert = (key, alphabet, text, encode) => {
 };
 
 function encode(text, key) {
-  let keyReduced = getKey(key);
-  let alphabet = getAlphabet(keyReduced);
-  console.log(alphabet);
-  return getConvert(keyReduced, alphabet, text, true);
+  return getConvert(text, key, true);
 }
 
 function decode(text, key) {
-  let keyReduced = getKey(key);
-  let alphabet = getAlphabet(keyReduced);
-  console.log(alphabet);
-  return getConvert(keyReduced, alphabet, text, false);
+  return getConvert(text, key, false);
 }
 
-console.log(decode(encode("This is an example", "secrtky"), "secrtky"));
-
-//console.log(decode("Kjmq jv bp cxcovpq.", "secretkey"));
+console.log(encode("This is an example.", "cipheeeere"));
 
 // Urew pu bq rzfsbtj.
