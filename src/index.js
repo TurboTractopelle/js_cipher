@@ -23,7 +23,9 @@ const getConvert = (text, key, encode) => {
         } else {
           index = alphabet.indexOf(letter) + (encode ? +i : -i);
         }
+
         ++i;
+        console.log(alphabet[index]);
         return flagUpper ? alphabet[index].toUpperCase() : alphabet[index];
       } else {
         i = 1;
@@ -41,6 +43,7 @@ function decode(text, key) {
   return getConvert(text, key, false);
 }
 
-console.log(encode("This is an example.", "cipheeeere"));
+console.log(encode("cJhmLUVlHISNSmyBAotMBwEyerzDjLz", "qfpsbu"));
 
-// Urew pu bq rzfsbtj.
+// dLktTHPxTWKSMbjTXgjGZoAwdrqGmRb <- attendu
+// dLktTHPxTWKSMbjTXgjGZoAwdrGmR <-moi
